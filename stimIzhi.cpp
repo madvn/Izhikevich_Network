@@ -1,7 +1,16 @@
+//********************************************************************
+// Izhikevich neuron network for stimulation tests
+// Author : Madhavun Candadai Vasu
+//
+// logNormal weights and connectivity read in from weights_logNorm.csv
+// or generate random weights
+//********************************************************************
+
 #include <iostream>
 #include <cstdlib>
 #include <fstream>
 #include <cmath>
+#include <iomanip>
 #include "cblas.h"
 
 #define PI 3.14
@@ -32,6 +41,8 @@ int main(){
 	srand(5231);
 
 	Neuron n[N];
+	int stim[2] = {2,4}; //  neurons that are stimulated - provide exactly 2 neurons. repeat if required.
+	int stimTime = simTime; // stimulating for entire time of simulation
 
 	// init params for excitatory neurons
 	for(int i=0;i<Ne; i++){
@@ -66,17 +77,26 @@ int main(){
 		for (int j = 0; j < Ne; j++)
 		{
 			n[i].weights[j] = 10*(rand()/float(RAND_MAX));
-			cout << n[i].weights[j] << endl;
+			//cout << n[i].weights[j] << endl;
 		}
 		// from inhibitory neurons
 		for (int j=Ne; j <N; j++){
 			n[i].weights[j] = -rand()/float(RAND_MAX);
-			cout << n[i].weights[j] << endl;
+			//cout << n[i].weights[j] << endl;
 		}
 		// self weight
 		//n[i].weights[i] = 0;
 	}
-
+	// read pre-generated weights
+	/*ifstream wts("weights_logNorm.csv");
+    string value;
+    for(int i=0;i<N;i++){
+    	for(int j=0;j<N;j++){
+	    	getline(wts, value, ',');
+	    	n[i].weights[j] = stod(value);
+	    }
+    }
+    wts.close();*/
 
 	ofstream izhiRaster;
 	izhiRaster.open("izhiSpikes.csv");
@@ -99,9 +119,9 @@ int main(){
 		// update buffers 
 		for(int i=0;i<N;i++){
 			double in(0);
-			// stimulating some excitatory neurons for a short time
-			if(t < 100){
-				if(i== 6 || i == 3){ // stimulating neurons
+			// stimulating some excitatory neurons 
+			if(t < stimTime){ 
+				if(i== stim[0] || i == stim[1]){ // stimulating neurons
 					//generate input
 					//in = rand()/float(RAND_MAX)*5;
 					//in = abs(cos(t*PI/180))*4;
@@ -111,7 +131,7 @@ int main(){
 					//in = rand()/float(RAND_MAX)*2;					
 					//in = abs(cos(t*PI/180))*1;
 				}
-			}
+			}		
 			double totalIn = in + cblas_ddot(N,activity,1,n[i].weights,1);
 			double v = n[i].v, u = n[i].u; 
 			n[i].vbuf = v+0.5*(0.04*v*v + 5*v + 140 - u + totalIn);

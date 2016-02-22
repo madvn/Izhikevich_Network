@@ -1,3 +1,8 @@
+//********************************************************************
+// Izhikevich neuron network recreated from izhikevich's paper
+// Author : Madhavun Candadai Vasu
+//********************************************************************
+
 #include <iostream>
 #include <cstdlib>
 #include <fstream>
