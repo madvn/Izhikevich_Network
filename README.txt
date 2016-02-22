@@ -9,11 +9,11 @@ File descriptions
 
 Notes on compiling the programs - 
 1. izhi.cpp
-	g++ -std=c++11 -o izhi izhi.cpp -L /usr/lib/atlas-base/atlas -lblas
+	g++ -o izhi izhi.cpp -L /usr/lib/atlas-base/atlas -lblas
 	./izhi
-1. generateWeights.cpp
+2. generateWeights.cpp
 	g++ -std=c++11 -o genWeights generateWeights.cpp
 	./genWeights
-2. stimIzhi.cpp
+3. stimIzhi.cpp
 	g++ -std=c++11 -o stimIzhi stimIzhi.cpp -L /usr/lib/atlas-base/atlas -lblas
 	./stimIzhi
