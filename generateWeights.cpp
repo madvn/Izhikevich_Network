@@ -21,29 +21,39 @@ int main(){
 	// log-normal distrbution
 	std::random_device rd;
     std::mt19937 gen(rd());
-    std::lognormal_distribution<> d(5,.1);
+    std::lognormal_distribution<> d(1.5,.1);
 	std::lognormal_distribution<> w(1,1);
 
-    double rands[N*2];
+    // generating an array of random numbers for weights
+    double rands[N*N];
     for(int i=0;i<N*N;i++){
     	rands[i] = w(gen);
+        //cout << rands[i] << endl;
     }
     int randsInd = 0;
+
+    /*for(int i=0;i<N;i++){
+        for(int j=0;j<N;j++){
+
+        }
+    }*/
 
     double conn[N][N];
     for(int i=0; i<N; i++){
     	float degree = round(d(gen));
     	for(int j=0;j<N;j++){
-    		if(rand() < (degree/N)*float(RAND_MAX)){
+            //cout << rand() - (degree/N)*float(RAND_MAX) << endl;
+    		if(rand() - (degree/N)*float(RAND_MAX) > 0){
+                cout << randsInd << "--" << rands[randsInd] << endl;
     			conn[i][j] = abs(rands[randsInd]);
     			if(j >= Ne){
     				conn[i][j] = -conn[i][j];
     			}
-    			randsInd++;
     		}
     		else{
     			conn[i][j] = 0.;
     		}
+            randsInd++;
     	}
     }
 

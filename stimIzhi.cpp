@@ -41,7 +41,7 @@ int main(){
 	srand(5231);
 
 	Neuron n[N];
-	int stim[2] = {2,4}; //  neurons that are stimulated - provide exactly 2 neurons. repeat if required.
+	int stim[2] = {3,4}; //  neurons that are stimulated - provide exactly 2 neurons. repeat if required.
 	int stimTime = simTime; // stimulating for entire time of simulation
 
 	// init params for excitatory neurons
@@ -71,7 +71,7 @@ int main(){
 	}
 
 	//init weights 
-	for (int i = 0; i < (N); i++)
+	/*for (int i = 0; i < (N); i++)
 	{
 		// from excitatory neurons
 		for (int j = 0; j < Ne; j++)
@@ -86,9 +86,9 @@ int main(){
 		}
 		// self weight
 		//n[i].weights[i] = 0;
-	}
+	}*/
 	// read pre-generated weights
-	/*ifstream wts("weights_logNorm.csv");
+	ifstream wts("weights_logNorm.csv");
     string value;
     for(int i=0;i<N;i++){
     	for(int j=0;j<N;j++){
@@ -96,7 +96,7 @@ int main(){
 	    	n[i].weights[j] = stod(value);
 	    }
     }
-    wts.close();*/
+    wts.close();
 
 	ofstream izhiRaster;
 	izhiRaster.open("izhiSpikes.csv");
