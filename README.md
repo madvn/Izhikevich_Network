@@ -1,4 +1,4 @@
-# izhikevich_network
+## Izhikevich_network
 
 File descriptions
 1. izhi.cpp - recreated from Izhikevich's paper - writes out to izhiSpikes.csv
